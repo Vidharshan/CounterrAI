@@ -11,7 +11,7 @@ function App() {
     if(!file){
       return;
     }
-
+    console.log(file)
     const formData = new FormData();
     formData.append('file', file);
 
@@ -20,8 +20,8 @@ function App() {
         'Content-Type': 'multipart/form-data'
       }
     });
-
-    //setResult(response.data.result);
+    console.log(response.data.result);
+    setResult(response.data.result);
   };
 
   return (
