@@ -29,7 +29,7 @@ function App() {
       <h1>Audio Classifier</h1>
       <input type="file" accept="audio/*" onChange={handleFileUpload} />
       <button onClick={handleFileUpload}>Upload</button>
-      { <p>The audio file was classified as {result}</p>}
+      {<p>The audio file was classified as {result}</p>}
     </div>
   );
 }

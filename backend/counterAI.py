@@ -29,7 +29,7 @@ def predict():
     input_data = request.files['file']
     filename =  input_data.filename
     print(filename)
-    f = "D:/CounterrAI/backend/" + secure_filename(filename)
+    f = "D:/CounterrAI/data/uploads/" + secure_filename(filename)
     input_data.save(f)
     
     X, sample_rate = librosa.load(f,duration=2.5,sr=22050*2,offset=0.5)
@@ -49,5 +49,5 @@ def predict():
 
 
 if __name__ == '__main__':
-    app.config['UPLOAD_FOLDER'] = '/Users/pavanadi/Desktop/Pavan/CounterrAI/data/uploads'
+    app.config['UPLOAD_FOLDER'] = 'D:/CounterrAI/data/uploads/'
     app.run(debug=True, port=5000)
