@@ -1,6 +1,6 @@
 cd frontend
 npm start
 cd ..
-set FLASK_APP=../counterAI/backend/counterAI.py
+set FLASK_APP=../CounterrAI/backend/counterAI.py
 flask run
 

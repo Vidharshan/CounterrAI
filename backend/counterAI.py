@@ -14,10 +14,10 @@ def index():
 
 @app.route("/predict", methods=['POST'])
 def predict():
-    model_path = 'D:/counterAI/backend/saved_model/cnnmodel.h5'
+    model_path = 'D:/CounterrAI/backend/saved_model/cnnmodel.h5'
     model = load_model(model_path)
     model.summary()
-    input_data = request.body.get("input/data")
+    input_data = request.headers.get("input/data")
     print(input_data)
     output = model.predict(input_data)
     return jsonify({"output": output})
@@ -39,7 +39,7 @@ def classify_audio():
     return jsonify({'filename': filename})
 
     # Load the Keras model
-    with open("D:\counterAI\saved_model\cnnmodel.h5", "rb") as f:
+    with open("D:\CounterrAI\saved_model\cnnmodel.h5", "rb") as f:
         model = load_model(f)
 
     # Load the audio file and preprocess it
@@ -57,5 +57,5 @@ def classify_audio():
 
 
 if __name__ == '__main__':
-    app.config['UPLOAD_FOLDER'] = 'D:/counterAI/data/uploads'
+    app.config['UPLOAD_FOLDER'] = 'D:/CounterrAI/data/uploads'
     app.run(debug=True, port=5000)

@@ -6,6 +6,11 @@ function App() {
 
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
+
+    if(!file){
+      return;
+    }
+
     const formData = new FormData();
     formData.append('file', file);
 
@@ -15,13 +20,14 @@ function App() {
       }
     });
 
-    setResult(response.data.result);
+    //setResult(response.data.result);
   };
 
   return (
     <div>
       <h1>Audio Classifier</h1>
       <input type="file" accept="audio/*" onChange={handleFileUpload} />
+      <button onClick={handleFileUpload}>Upload</button>
       { <p>The audio file was classified as {result}</p>}
     </div>
   );
