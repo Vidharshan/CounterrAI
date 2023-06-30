@@ -2,9 +2,15 @@ from flask import Flask
 from flask import request, jsonify
 from werkzeug.utils import secure_filename
 from keras.models import load_model
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
 import pickle
 import os
+import numpy as np
 import subprocess
+import os
+import pandas as pd
+import librosa
+import glob 
 
 app = Flask(__name__)
 
@@ -14,13 +20,31 @@ def index():
 
 @app.route("/predict", methods=['POST'])
 def predict():
-    model_path = 'D:/counterAI/backend/saved_model/cnnmodel.h5'
+    Emotions = pd.read_csv('/Users/pavanadi/Desktop/Pavan/CounterrAI/backend/saved_model/emotion.csv')
+    Y = Emotions['labels'].values
+    encoder = OneHotEncoder()
+    Y = encoder.fit_transform(np.array(Y).reshape(-1,1)).toarray()
+    model_path = '/Users/pavanadi/Desktop/Pavan/CounterrAI/backend/saved_model/cnnmodel.h5'
     model = load_model(model_path)
     model.summary()
-    input_data = request.body.get("input/data")
-    print(input_data)
-    output = model.predict(input_data)
-    return jsonify({"output": output})
+    input_data = request.files['file']
+    filename =  input_data.filename
+    input_data.save(secure_filename(filename))
+    f = "/Users/pavanadi/Desktop/Pavan/CounterrAI/backend/" + filename
+   
+    X, sample_rate = librosa.load(f,duration=2.5,sr=22050*2,offset=0.5)
+    sample_rate = np.array(sample_rate)
+    mfccs = np.mean(librosa.feature.mfcc(y=X, sr=sample_rate, n_mfcc=13),axis=0)
+    featurelive = mfccs
+    livedf2 = featurelive
+    twodim= np.expand_dims(livedf2, axis=1)
+    output = model.predict(twodim)
+    output = (encoder.inverse_transform((output)))
+    s = pd.Series(output[0])
+    mode = s.mode()[0]
+    print(mode)
+
+    return "hiii"
 
 
 @app.route('/classify-audio', methods=['POST'])
@@ -39,7 +63,7 @@ def classify_audio():
     return jsonify({'filename': filename})
 
     # Load the Keras model
-    with open("D:\counterAI\saved_model\cnnmodel.h5", "rb") as f:
+    with open("/Users/pavanadi/Desktop/Pavan/CounterrAI/backend/saved_model/cnnmodel.h5", "rb") as f:
         model = load_model(f)
 
     # Load the audio file and preprocess it
@@ -57,5 +81,5 @@ def classify_audio():
 
 
 if __name__ == '__main__':
-    app.config['UPLOAD_FOLDER'] = 'D:/counterAI/data/uploads'
+    app.config['UPLOAD_FOLDER'] = '/Users/pavanadi/Desktop/Pavan/CounterrAI/data/uploads'
     app.run(debug=True, port=5000)

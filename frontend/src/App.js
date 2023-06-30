@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+
 function App() {
   const [result, setResult] = useState(null);
 
@@ -9,7 +10,7 @@ function App() {
     const formData = new FormData();
     formData.append('file', file);
 
-    const response = await axios.post('http://localhost:5000/predict', formData, {
+    const response = await axios.post('http://127.0.0.1:5000/predict', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -21,7 +22,7 @@ function App() {
   return (
     <div>
       <h1>Audio Classifier</h1>
-      <input type="file" accept="audio/*" onChange={handleFileUpload} />
+      <input type="file" name = "audio" accept="audio/*" onChange={handleFileUpload} />
       { <p>The audio file was classified as {result}</p>}
     </div>
   );
