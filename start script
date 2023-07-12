@@ -3,4 +3,5 @@ npm start
 cd ..
 set FLASK_APP=../CounterrAI/backend/counterAI.py
 flask run
-
+npm install http-server
+http-server ./

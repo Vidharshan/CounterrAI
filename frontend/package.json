@@ -810,17 +810,19 @@
     "yocto-queue": "^0.1.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "react-scripts start"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Vidharshan/counterAI.git"
+    "url": "git+https://github.com/Vidharshan/CounterrAI.git"
   },
   "author": "Vidharshana",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Vidharshan/counterAI/issues"
+    "url": "https://github.com/Vidharshan/CounterrAI/issues"
   },
   "devServer": {
     "historyApiFallback": false
